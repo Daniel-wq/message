@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>留言板</title>
+	<link rel="stylesheet" href="./tpl/bt/css/bootstrap.min.css">
+</head>
+<body>
+	<div class="container" style="margin-top: 20px;margin-bottom: 50px;">
+		<div class="panel panel-info">
+			<!-- Default panel contents -->
+			<div class="panel-heading">留言板</div>
+
+
+			<!-- Table -->
+			<table class="table table-hover">
+				<tr>
+					<td>编号</td>
+					<td>昵称</td>
+					<td>内容</td>
+					<td>发布时间</td>
+					<td>操作</td>
+				</tr>
+				<tr>
+				<!--1、定义用来编号的变量$i；2、为了后面删除信息时，保证编号的连续性-->
+				<?php $i = 0; ?>
+				<!--1、遍历数据库，获得键值；2、为了下面获得数组中的相应的内容-->
+				<?php foreach($data as $k=>$v){ ?>
+					<!--1、让变量自增；2、为了在每增加或删除信息后，保证编号的连续性-->
+					<?php $i++ ?>
+					<!--1、在对应的编号位置输出相应的内容2、为了在页面中显示编号-->
+					<td><?php echo $i ?></td>
+					<!--1、在对应的昵称位置输出相应的内容2、为了在页面中显示昵称-->
+					<td><?php echo $v['nickname'] ?></td>
+					<!--1、在对应的内容位置输出相应的内容2、为了在页面中显示内容-->
+					<td><?php echo $v['content']?></td>
+					<!--1、在对应的发布时间位置输出相应的内容2、为了在页面中显示发布时间-->
+					<td><?php echo $v['time']?></td>
+					<td>
+						<!--1、将参数$k传递到edi.php页面；2、为了获得相应的get地址-->
+						<a href="./edi.php?Snumber=<?php echo $k; ?>" class="btn btn-primary btn-xs">编辑</a>
+						<!--1、弹出窗口再次确认用户是否删除；2、给用户再次确认的机会，避免用户误点删除按钮，删除必要的信息-->
+						<!--1、将参数$k传递到del.php页面；2、为了获得相应的get地址-->
+						<a href="javascript:if(confirm('确定删除吗？'))location.href='./del.php?Snumber=<?php echo $k; ?>'" class="btn btn-danger btn-xs">删除</a>
+					</td>
+				</tr>
+				<?php } ?>
+			</table>
+		</div>
+		<hr>
+		<form action="" method="post">
+			<div class="form-group">
+				<input type="text" class="form-control" placeholder="输入您的昵称" name="nickname">
+			</div>
+			<div class="form-group">
+				<textarea name="content" class="form-control" cols="30" rows="10" placeholder="请输入您的留言"></textarea>
+			</div>
+
+			<button type="submit" class="btn btn-info btn-block">发表</button>
+		</form>
+	</div>
+
+
+
+
+
+</body>
+</html>
